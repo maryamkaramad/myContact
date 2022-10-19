@@ -1,8 +1,21 @@
+
 .ContactItem{
-    
     display: flex;
     justify-content: center;
     align-items: center;
+   
+    
+        .Header__content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    i{
+    &:hover{
+        color: brown;
+    }}
+        }
+    
     .ContactItem__content{
     
         display: flex;

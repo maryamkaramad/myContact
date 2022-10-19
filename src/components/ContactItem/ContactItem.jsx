@@ -2,28 +2,47 @@ import React from "react";
 import IconButton from "./../IconButton/IconButton";
 import "./ContactItem.scss";
 import Continer from "./../Continer/Continer";
-
 import { Link } from "react-router-dom";
-const ContactItem = ({ setcontacts, contacts }) => {
-  const handlefavorit = (id) => {
-    setcontacts(
-      contacts.map((ContactItem) =>
-        ContactItem.id === id
-          ? { ...ContactItem, favorite: !ContactItem.favorite }
-          : ContactItem
-      )
-    );
+import { useSelector, useDispatch } from "react-redux";
+import {
+  DeleteContact,
+  FavoriteContact,
+  FavoritestateContact,
+} from "../../ridux/contact.slice";
+
+const ContactItem = () => {
+  const contacts = useSelector((state) => state.contact);
+  const dispatch = useDispatch();
+
+  const handlefavorit = (Contacts) => {
+    dispatch(FavoriteContact(Contacts));
   };
   const handledelete = (id) => {
     alert("are you sare?");
-    setcontacts(contacts.filter((ContactItem) => ContactItem.id !== id));
+    dispatch(DeleteContact(id));
   };
-
+  const handlestateall = () => {};
+  const handlestatefavorite = (contacts) => {
+    const c = contacts.filter((contact) => contact.favorite === true);
+    dispatch(FavoritestateContact(c));
+  };
   return (
     <div className="ContactItem">
       <Continer>
+        <div className="Header__content">
+          <IconButton onClick={handlestateall}>
+            <i class="fa-sharp fa-solid fa-user fa-2x" title="all contact">
+              2
+            </i>
+          </IconButton>
+          <IconButton onClick={() => handlestatefavorite(contacts)}>
+            <i class="fa-solid fa-heart fa-2x" title="favorite">
+              1
+            </i>
+          </IconButton>
+        </div>
         {contacts.map((ContactItem) => (
-          <div className="ContactItem__content">
+          <div key={ContactItem.id} className="ContactItem__content">
             <div className="Avatar">
               <img
                 src={"https://robohash.org/" + ContactItem.id}
@@ -64,7 +83,7 @@ const ContactItem = ({ setcontacts, contacts }) => {
             </div>
             <div
               style={{ cursor: "pointer" }}
-              onClick={() => handlefavorit(ContactItem.id)}
+              onClick={() => handlefavorit(ContactItem)}
             >
               {ContactItem.favorite === true ? (
                 <i

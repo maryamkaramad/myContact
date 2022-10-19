@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Continer from "../../components/Continer/Continer";
 import { Link } from "react-router-dom";
-import { Contactdb } from "../../db/db";
+
 const Contacts = () => {
   const { id } = useParams();
   const [formdata, setformdata] = useState({
